@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:latihan_internship_test/presentation/features/home/screen/home_page.dart';
 
+import '../../register/screen/register_page.dart';
 import '../bloc/login_bloc.dart';
 
 class LoginWithEmailPasswordButtonWidget extends StatelessWidget {

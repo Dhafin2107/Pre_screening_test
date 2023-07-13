@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:latihan_internship_test/data/model/user/user_model.dart';
 
 import 'package:latihan_internship_test/data/types.dart';
 
@@ -20,14 +19,14 @@ class BookRemoteDataSourceImpl extends BookRemoteDataSource {
     try {
       final Request request = serviceLocatorInstance<Request>();
 
-      final response = await request.get(listBook, requiresAuthToken: true);
+      final response = await request.get(listBook, requiresAuthToken: false);
       if (response.statusCode == 200) {
         ListBook listBook = [];
 
         final listBooksMap = response.data['data'] ?? [];
 
-        for (var userdata in listBooksMap) {
-          listBook.add(Book.fromJson(userdata));
+        for (var bookdata in listBooksMap) {
+          listBook.add(Book.fromJson(bookdata));
         }
         return Right(listBook);
       }

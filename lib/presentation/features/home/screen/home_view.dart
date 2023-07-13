@@ -35,20 +35,19 @@ class HomeView extends StatelessWidget {
           }
           if (state is BookloadedState) {
             return ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            final item = state.book[index];
-                            return ListBookWidget(context, item: item,);
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 16.0),
-                          itemCount: state.book.length);
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = state.book[index];
+                  return ListBookWidget(
+                    context,
+                    item: item,
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16.0),
+                itemCount: state.book.length);
           }
-          return ListView(
-            physics:
-                AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-            children: [],
-          );
+          return Text('gamasuk datanya');
         },
       ),
     );

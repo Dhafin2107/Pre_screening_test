@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../data/api_endpoints.dart';
 import '../data/types.dart';
 import '../presentation/global/services_locator/service_locator.dart';
-import '../services/local_storage_service.dart';
 import '../services/token_chace_service.dart';
 
 class Request {
@@ -94,19 +94,14 @@ class Request {
 
 
   Future<void> _setToken() async {
-    final accessToken = await _getAccessToken();
-
-    if (accessToken != null) {
-      updateAuthorization(accessToken);
-    }
+    final token = serviceLocatorInstance<AuthenticationChallenge>();
+    updateAuthorization(token.toString());
   }
 
   void _handleUnauthorized() async {
     print('LOG OUT PROCESS ==========');
     // await serviceLocatorInstance<UserCacheService>()
     //     .deleteUserFromLocalStorage();
-    await serviceLocatorInstance<LocalStorageService>()
-        .deleteViewedStudyPlanFromLocalStorage();
     await serviceLocatorInstance<TokenCacheService>()
         .deleteTokenFromLocalStorage();
     // await serviceLocatorInstance<AppRoute>().pushAndPopUntil(
@@ -115,31 +110,17 @@ class Request {
     // );
   }
 
-  Future<String?> _getAccessToken() async {
-    // final expiredTime = const Duration(hours: 23);
+//   Future<String?> _getAccessToken() async {
+//   final token = await serviceLocatorInstance<TokenCacheService>()
+//       .getTokenFromLocalStorage();
 
-    final token =
-        serviceLocatorInstance<TokenCacheService>().getTokenFromLocalStorage();
-    return token.toString();
-
-    // if (token != null) {
-    //   final tokenTime = token.tokenTime != null
-    //       ? DateTime.parse(token.tokenTime!)
-    //       : DateTime.now();
-    //   final expired = isExpired(tokenTime, expiredTime);
-    //   if (expired) {
-    //     updateAuthorization(token.accessToken);
-    //     final result = await serviceLocatorInstance<AuthenticationUseCase>()
-    //         .refreshToken(token.refreshToken);
-    //     if (result.isRight()) {
-    //       final newToken = result.getOrElse(() => Token());
-
-    //       await serviceLocatorInstance<TokenCacheService>()
-    //           .saveTokenToLocalStorage(newToken);
-  }
-  // }
-
-  // return token?.token;
+//   if (token != null) {
+//     updateAuthorization(token.token);
+//     return token.token;
 //   }
+
+//   return null;
 // }
+
 }
+
